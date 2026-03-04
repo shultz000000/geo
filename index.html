@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GEOINT — Геолокация по фото</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="geoint.css"/>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-logo">
+    <div class="logo-mark"></div>
+    <div class="logo-text">GEO<span>INT</span></div>
+  </div>
+  <div class="header-coords" id="headerCoords">
+    <b>LAT</b>&nbsp;—&nbsp;&nbsp;<b>LON</b>&nbsp;—
+  </div>
+  <div class="tile-switcher">
+    <button class="tile-btn active" onclick="setTile('osm')">OSM</button>
+    <button class="tile-btn" onclick="setTile('sat')">СПУТНИК</button>
+    <button class="tile-btn" onclick="setTile('topo')">РЕЛЬЕФ</button>
+  </div>
+  <div class="header-right">
+    <div class="header-status" id="ovStatus" onclick="fetchOverpassStatus()" title="Обновить статус Overpass">
+      <div class="status-dot" id="statusDot"></div>
+      <span id="statusText">ПОДКЛЮЧЕНИЕ</span>
+      &nbsp;|&nbsp;
+      СЛОТЫ: <b id="statusSlots" style="color:var(--accent);margin-left:3px">—</b>
+    </div>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- PHOTO -->
+    <div class="sb-section">
+      <div class="sb-label">Целевое фото</div>
+      <div class="photo-drop" id="photoDrop" onclick="handlePhotoClick()">
+        <div class="photo-drop-hint" id="photoHint">
+          <span class="ico">📸</span>
+          ЗАГРУЗИТЬ ФОТО<br>
+          <span style="font-size:9px">клик или перетащить</span>
+        </div>
+      </div>
+      <input type="file" id="fileInput" accept="image/*"/>
+      <div class="exif-badge" id="exifBadge">
+        <span>📍</span>
+        <span id="exifCoords">—</span>
+        <button onclick="flyToExif()">→ MAP</button>
+      </div>
+      <div class="photo-actions" id="photoActions">
+        <button class="btn-ghost" onclick="openPhoto()">⛶ ОТКРЫТЬ</button>
+        <button class="btn-ghost danger" onclick="deletePhoto()">✕ УДАЛИТЬ</button>
+      </div>
+    </div>
+
+    <!-- SEARCH ZONE -->
+    <div class="sb-section">
+      <div class="sb-label">Зона поиска</div>
+      <button class="pin-btn" id="btnPin">
+        <span id="pinIcon">📍</span>
+        <span id="pinLabel">КЛИКНИ НА КАРТУ — ЦЕНТР ПОИСКА</span>
+      </button>
+      <div class="coords-display" id="centerDisplay">—</div>
+      <div class="radius-row">
+        <label>РАДИУС</label>
+        <input type="range" id="radiusSlider" min="1" max="50" step="1" value="5"/>
+        <span class="radius-val" id="radiusVal">5 км</span>
+      </div>
+    </div>
+
+    <!-- BEARING -->
+    <div class="sb-section">
+      <div class="sb-label">Азимут / Направление съёмки</div>
+      <div class="bearing-row">
+        <button class="bearing-toggle" id="btnBearing" onclick="toggleBearing()">
+          🧭 ЗАДАТЬ НАПРАВЛЕНИЕ КАМЕРЫ
+        </button>
+      </div>
+      <div class="bearing-angle-wrap" id="bearingAngleWrap">
+        <label>АЗ</label>
+        <input type="range" id="bearingSlider" min="0" max="359" step="1" value="0"/>
+        <span class="bearing-deg" id="bearingDeg">0°</span>
+      </div>
+    </div>
+
+    <!-- SUN ANALYSIS -->
+    <div class="sb-section">
+      <div class="sb-label">Анализ солнца / теней</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <input class="clue-input" id="sunDateInput" type="datetime-local"
+          style="flex:1;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border2);border-radius:3px;padding:5px 7px;outline:none;"/>
+        <button class="btn-add" style="padding:6px 10px;font-size:10px;" onclick="runSunCalc()">☀</button>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted2);margin-top:4px;">
+        дата и время съёмки → направление солнца
+      </div>
+      <div class="sun-result" id="sunResult"></div>
+    </div>
+
+    <!-- CLUES -->
+    <div class="sb-section">
+      <div class="sb-label">Объекты / Зацепки</div>
+      <div class="input-row">
+        <input class="clue-input" id="clueInput" type="text"
+          placeholder="церковь, мост, АЗС Shell..." autocomplete="off"/>
+        <button class="btn-add" id="btnAdd">+ ДОБ</button>
+      </div>
+      <div class="hint-text" id="hintText"></div>
+    </div>
+
+    <!-- CLUES LIST -->
+    <div class="clues-scroll" id="cluesList">
+      <div class="empty-msg" id="emptyMsg">
+        ЗАЦЕПОК НЕТ<br>
+        <span style="font-size:9px">опишите объекты, видимые на фото</span>
+      </div>
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="sb-bottom">
+      <div class="buffer-row">
+        <label>БУФЕР</label>
+        <input type="range" id="bufferSlider" min="100" max="10000" step="100" value="500"/>
+        <span class="buffer-val" id="bufferVal">500 м</span>
+      </div>
+      <div class="analyze-wrap">
+        <button class="btn-analyze" id="btnAnalyze" disabled>⌖ АНАЛИЗ ПЕРЕСЕЧЕНИЙ</button>
+        <div class="candidates-list" id="candidateList"></div>
+        <button class="export-btn" id="btnExport" style="display:none" onclick="exportCSV()">↓ ЭКСПОРТ CSV</button>
+        <button class="export-btn" id="btnCellTowers" onclick="searchCellTowers()" style="margin-top:5px;border-color:var(--accent3);color:var(--accent3)">📡 ВЫШКИ БС (OSM)</button>
+      </div>
+    </div>
+
+    <!-- SESSION -->
+    <div class="session-row">
+      <button class="session-btn" onclick="saveSession()" title="Сохранить сессию в файл">💾 СОХРАНИТЬ</button>
+      <button class="session-btn" onclick="loadSessionFile()" title="Загрузить сессию из файла">📂 ОТКРЫТЬ</button>
+      <button class="session-btn" onclick="copyPermalink()" title="Скопировать permalink">🔗 ССЫЛКА</button>
+      <button class="session-btn warn" onclick="clearAll()" title="Сбросить всё">✕ СБРОС</button>
+    </div>
+    <input type="file" id="sessionFileInput" accept=".json" style="display:none"/>
+
+  </div>
+
+  <!-- MAP -->
+  <div class="map-wrap">
+    <div id="map"></div>
+
+    <div class="map-hud">
+      <div class="hud-pill">ЗАЦЕПОК: <b id="hudClues">0</b></div>
+      <div class="hud-pill" id="hudLayersWrap" style="display:none">СЛОЁВ: <b id="hudLayers">0</b></div>
+      <div class="hud-pill warn" id="hudBearing" style="display:none">АЗ: <b id="hudBearingVal">0°</b></div>
+    </div>
+
+    <div class="legend-box" id="legendBox">
+      <div class="legend-title">// СЛОИ</div>
+      <div id="legendItems"></div>
+    </div>
+
+    <button class="heatmap-btn" id="heatmapBtn" onclick="toggleHeatmap()">🔥 ТЕПЛОВАЯ КАРТА</button>
+
+    <div class="ext-links">
+      <button class="ext-btn" onclick="openF4Map()" title="3D-вид зданий">🏙 3D</button>
+      <button class="ext-btn" onclick="openSatlex()" title="Анализ спутниковых тарелок">📡 SATLEX</button>
+      <button class="ext-btn" onclick="openGoogleEarth()" title="Google Earth Web">🌍 EARTH</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
+
+  <script src="geoint.js"></script>
+</body>
+</html>

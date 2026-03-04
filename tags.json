@@ -1,0 +1,1209 @@
+[
+  {
+    "tier": 1,
+    "group": "Редкие и гео-ограниченные",
+    "color": "#ff4d4d",
+    "entries": [
+      {
+        "label": "nuclear_power_plant",
+        "weight": 10,
+        "keys": [
+          "nuclear plant",
+          "аэс",
+          "nuclear"
+        ],
+        "tags": {
+          "power": "plant",
+          "plant:source": "nuclear"
+        }
+      },
+      {
+        "label": "missile_silo",
+        "weight": 10,
+        "keys": [
+          "missile silo",
+          "ракетная шахта",
+          "шахтная пу"
+        ],
+        "tags": {
+          "military": "missile_silo"
+        }
+      },
+      {
+        "label": "lighthouse",
+        "weight": 9,
+        "keys": [
+          "lighthouse",
+          "маяк"
+        ],
+        "tags": {
+          "man_made": "lighthouse"
+        }
+      },
+      {
+        "label": "dam",
+        "weight": 9,
+        "keys": [
+          "dam",
+          "плотина",
+          "дамба"
+        ],
+        "tags": {
+          "waterway": "dam"
+        }
+      },
+      {
+        "label": "cooling_tower",
+        "weight": 9,
+        "keys": [
+          "cooling tower",
+          "градирня"
+        ],
+        "tags": {
+          "man_made": "cooling_tower"
+        }
+      },
+      {
+        "label": "radar_station",
+        "weight": 9,
+        "keys": [
+          "radar",
+          "радар",
+          "рлс",
+          "радиолокац"
+        ],
+        "tags": {
+          "man_made": "radar"
+        }
+      },
+      {
+        "label": "radio_telescope",
+        "weight": 9,
+        "keys": [
+          "radio telescope",
+          "радиотелескоп"
+        ],
+        "tags": {
+          "man_made": "telescope"
+        }
+      },
+      {
+        "label": "gasometer",
+        "weight": 9,
+        "keys": [
+          "gasometer",
+          "газгольдер"
+        ],
+        "tags": {
+          "man_made": "gasometer"
+        }
+      },
+      {
+        "label": "oil_well",
+        "weight": 9,
+        "keys": [
+          "oil well",
+          "нефтяная скважина",
+          "качалка"
+        ],
+        "tags": {
+          "man_made": "petroleum_well"
+        }
+      },
+      {
+        "label": "border_control",
+        "weight": 9,
+        "keys": [
+          "border control",
+          "таможня",
+          "пограничный"
+        ],
+        "tags": {
+          "barrier": "border_control"
+        },
+        "nodeOnly": true
+      },
+      {
+        "label": "volcano",
+        "weight": 9,
+        "keys": [
+          "volcano",
+          "вулкан"
+        ],
+        "tags": {
+          "natural": "volcano"
+        }
+      },
+      {
+        "label": "geyser",
+        "weight": 9,
+        "keys": [
+          "geyser",
+          "гейзер",
+          "термальный источник"
+        ],
+        "tags": {
+          "natural": "geyser"
+        }
+      },
+      {
+        "label": "glacier",
+        "weight": 9,
+        "keys": [
+          "glacier",
+          "ледник"
+        ],
+        "tags": {
+          "natural": "glacier"
+        }
+      },
+      {
+        "label": "fjord",
+        "weight": 9,
+        "keys": [
+          "fjord",
+          "фьорд"
+        ],
+        "tags": {
+          "natural": "bay"
+        }
+      },
+      {
+        "label": "aqueduct",
+        "weight": 9,
+        "keys": [
+          "aqueduct",
+          "акведук"
+        ],
+        "tags": {
+          "man_made": "aqueduct"
+        }
+      },
+      {
+        "label": "dry_dock",
+        "weight": 9,
+        "keys": [
+          "dry dock",
+          "сухой dock",
+          "стапель",
+          "доковая камера"
+        ],
+        "tags": {
+          "waterway": "dock"
+        }
+      },
+      {
+        "label": "minaret",
+        "weight": 9,
+        "keys": [
+          "minaret",
+          "минарет"
+        ],
+        "tags": {
+          "man_made": "minaret"
+        }
+      },
+      {
+        "label": "observatory",
+        "weight": 8,
+        "keys": [
+          "observatory",
+          "обсерватория",
+          "обсерватор"
+        ],
+        "tags": {
+          "man_made": "telescope"
+        },
+        "tagsAlt": [
+          {
+            "building": "observatory"
+          },
+          {
+            "amenity": "observatory"
+          }
+        ]
+      },
+      {
+        "label": "ski_lift",
+        "weight": 8,
+        "keys": [
+          "ski lift",
+          "подъемник",
+          "канатная дорога"
+        ],
+        "tagsRaw": "aerialway"
+      },
+      {
+        "label": "quarry",
+        "weight": 8,
+        "keys": [
+          "quarry",
+          "карьер"
+        ],
+        "tags": {
+          "landuse": "quarry"
+        }
+      },
+      {
+        "label": "water_tower",
+        "weight": 8,
+        "keys": [
+          "water tower",
+          "водонапорная башня",
+          "водобашня"
+        ],
+        "tags": {
+          "man_made": "water_tower"
+        }
+      },
+      {
+        "label": "grain_elevator",
+        "weight": 8,
+        "keys": [
+          "grain elevator",
+          "элеватор",
+          "зернохранилище"
+        ],
+        "tags": {
+          "man_made": "silo"
+        }
+      },
+      {
+        "label": "salt_mine",
+        "weight": 8,
+        "keys": [
+          "salt mine",
+          "соляная шахта"
+        ],
+        "tags": {
+          "industrial": "mine"
+        }
+      },
+      {
+        "label": "waterfall",
+        "weight": 8,
+        "keys": [
+          "waterfall",
+          "водопад"
+        ],
+        "tags": {
+          "waterway": "waterfall"
+        }
+      },
+      {
+        "label": "cave",
+        "weight": 8,
+        "keys": [
+          "cave",
+          "пещера"
+        ],
+        "tags": {
+          "natural": "cave_entrance"
+        }
+      },
+      {
+        "label": "slipway",
+        "weight": 8,
+        "keys": [
+          "slipway",
+          "слип",
+          "спуск для лодок"
+        ],
+        "tags": {
+          "leisure": "slipway"
+        }
+      },
+      {
+        "label": "chimney",
+        "weight": 7,
+        "keys": [
+          "chimney",
+          "дымовая труба",
+          "труба завода"
+        ],
+        "tags": {
+          "man_made": "chimney"
+        }
+      }
+    ]
+  },
+  {
+    "tier": 2,
+    "group": "Инфраструктурные доминанты",
+    "color": "#ffa500",
+    "entries": [
+      {
+        "label": "runway",
+        "weight": 9,
+        "keys": [
+          "runway",
+          "взлётная полоса",
+          "ввп"
+        ],
+        "tags": {
+          "aeroway": "runway"
+        }
+      },
+      {
+        "label": "airport",
+        "weight": 7,
+        "keys": [
+          "airport",
+          "aerodrome",
+          "аэропорт",
+          "аэродром"
+        ],
+        "tags": {
+          "aeroway": "aerodrome"
+        }
+      },
+      {
+        "label": "helipad",
+        "weight": 8,
+        "keys": [
+          "helipad",
+          "вертолётная площадка",
+          "вертодром"
+        ],
+        "tags": {
+          "aeroway": "helipad"
+        }
+      },
+      {
+        "label": "harbour",
+        "weight": 7,
+        "keys": [
+          "harbour",
+          "harbor",
+          "порт",
+          "гавань"
+        ],
+        "tags": {
+          "harbour": "yes"
+        }
+      },
+      {
+        "label": "breakwater",
+        "weight": 7,
+        "keys": [
+          "breakwater",
+          "мол",
+          "волнорез"
+        ],
+        "tags": {
+          "man_made": "breakwater"
+        }
+      },
+      {
+        "label": "pier",
+        "weight": 6,
+        "keys": [
+          "pier",
+          "причал",
+          "пирс"
+        ],
+        "tags": {
+          "man_made": "pier"
+        }
+      },
+      {
+        "label": "ferry_terminal",
+        "weight": 7,
+        "keys": [
+          "ferry",
+          "паром",
+          "паромная переправа"
+        ],
+        "tags": {
+          "amenity": "ferry_terminal"
+        }
+      },
+      {
+        "label": "power_plant",
+        "weight": 7,
+        "keys": [
+          "power plant",
+          "электростанция",
+          "тэц",
+          "гэс"
+        ],
+        "tags": {
+          "power": "plant"
+        }
+      },
+      {
+        "label": "substation",
+        "weight": 6,
+        "keys": [
+          "substation",
+          "подстанция"
+        ],
+        "tags": {
+          "power": "substation"
+        }
+      },
+      {
+        "label": "wind_turbine",
+        "weight": 6,
+        "keys": [
+          "wind turbine",
+          "ветряк",
+          "ветрогенератор"
+        ],
+        "tags": {
+          "power": "generator",
+          "generator:source": "wind"
+        }
+      },
+      {
+        "label": "solar_farm",
+        "weight": 6,
+        "keys": [
+          "solar farm",
+          "солнечная электростанция"
+        ],
+        "tags": {
+          "power": "plant",
+          "plant:source": "solar"
+        }
+      },
+      {
+        "label": "comm_tower",
+        "weight": 8,
+        "keys": [
+          "communication tower",
+          "башня связи",
+          "телебашня"
+        ],
+        "tags": {
+          "man_made": "communications_tower"
+        }
+      },
+      {
+        "label": "cell_mast",
+        "weight": 7,
+        "keys": [
+          "mast",
+          "вышка бс",
+          "базовая станция",
+          "бс"
+        ],
+        "tags": {
+          "man_made": "mast",
+          "tower:type": "communication"
+        }
+      },
+      {
+        "label": "viaduct",
+        "weight": 8,
+        "keys": [
+          "viaduct",
+          "виадук",
+          "эстакада"
+        ],
+        "tags": {
+          "bridge": "viaduct"
+        }
+      },
+      {
+        "label": "bridge",
+        "weight": 6,
+        "keys": [
+          "bridge",
+          "мост"
+        ],
+        "tags": {
+          "bridge": "yes"
+        }
+      },
+      {
+        "label": "tunnel",
+        "weight": 6,
+        "keys": [
+          "tunnel",
+          "тоннель"
+        ],
+        "tags": {
+          "tunnel": "yes"
+        }
+      },
+      {
+        "label": "railway_station",
+        "weight": 5,
+        "keys": [
+          "station",
+          "вокзал",
+          "станция"
+        ],
+        "tags": {
+          "railway": "station"
+        }
+      },
+      {
+        "label": "railway_yard",
+        "weight": 8,
+        "keys": [
+          "railway yard",
+          "сортировочная",
+          "депо"
+        ],
+        "tags": {
+          "railway": "yard"
+        }
+      },
+      {
+        "label": "level_crossing",
+        "weight": 6,
+        "keys": [
+          "level crossing",
+          "переезд",
+          "ж/д переезд"
+        ],
+        "tags": {
+          "railway": "level_crossing"
+        },
+        "nodeOnly": true
+      },
+      {
+        "label": "reservoir",
+        "weight": 6,
+        "keys": [
+          "reservoir",
+          "водохранилище"
+        ],
+        "tags": {
+          "landuse": "reservoir"
+        }
+      },
+      {
+        "label": "weir",
+        "weight": 7,
+        "keys": [
+          "weir",
+          "запруда",
+          "шлюз"
+        ],
+        "tags": {
+          "waterway": "weir"
+        }
+      }
+    ]
+  },
+  {
+    "tier": 3,
+    "group": "Военные и стратегические",
+    "color": "#ff5f2e",
+    "entries": [
+      {
+        "label": "ammunition_depot",
+        "weight": 9,
+        "keys": [
+          "ammunition depot",
+          "арсенал",
+          "склад боеприпасов"
+        ],
+        "tags": {
+          "military": "ammunition"
+        }
+      },
+      {
+        "label": "naval_base",
+        "weight": 9,
+        "keys": [
+          "naval base",
+          "вмб",
+          "военно-морская база"
+        ],
+        "tags": {
+          "military": "naval_base"
+        }
+      },
+      {
+        "label": "military_base",
+        "weight": 8,
+        "keys": [
+          "military base",
+          "военная база",
+          "вч"
+        ],
+        "tags": {
+          "landuse": "military"
+        }
+      },
+      {
+        "label": "bunker",
+        "weight": 8,
+        "keys": [
+          "bunker",
+          "бункер",
+          "укрытие"
+        ],
+        "tags": {
+          "military": "bunker"
+        }
+      },
+      {
+        "label": "checkpoint",
+        "weight": 8,
+        "keys": [
+          "checkpoint",
+          "кпп",
+          "блокпост"
+        ],
+        "tags": {
+          "barrier": "checkpoint"
+        }
+      },
+      {
+        "label": "airfield_military",
+        "weight": 8,
+        "keys": [
+          "military airfield",
+          "военный аэродром"
+        ],
+        "tags": {
+          "aeroway": "aerodrome",
+          "military": "airfield"
+        }
+      },
+      {
+        "label": "barracks",
+        "weight": 7,
+        "keys": [
+          "barracks",
+          "казарма",
+          "казармы"
+        ],
+        "tags": {
+          "military": "barracks"
+        }
+      },
+      {
+        "label": "firing_range",
+        "weight": 7,
+        "keys": [
+          "firing range",
+          "стрельбище",
+          "полигон"
+        ],
+        "tags": {
+          "military": "range"
+        }
+      },
+      {
+        "label": "trench",
+        "weight": 7,
+        "keys": [
+          "trench",
+          "окоп",
+          "траншея",
+          "фортификация"
+        ],
+        "tags": {
+          "military": "trench"
+        }
+      },
+      {
+        "label": "prison",
+        "weight": 7,
+        "keys": [
+          "prison",
+          "тюрьма",
+          "ик",
+          "сизо",
+          "колония"
+        ],
+        "tags": {
+          "amenity": "prison"
+        }
+      },
+      {
+        "label": "police",
+        "weight": 5,
+        "keys": [
+          "police",
+          "полиция"
+        ],
+        "tags": {
+          "amenity": "police"
+        }
+      }
+    ]
+  },
+  {
+    "tier": 4,
+    "group": "Природные маркеры",
+    "color": "#7fff6e",
+    "entries": [
+      {
+        "label": "peak",
+        "weight": 7,
+        "keys": [
+          "peak",
+          "mountain",
+          "hill",
+          "вершина",
+          "гора",
+          "холм"
+        ],
+        "tags": {
+          "natural": "peak"
+        }
+      },
+      {
+        "label": "cliff",
+        "weight": 6,
+        "keys": [
+          "cliff",
+          "скала",
+          "обрыв",
+          "утёс"
+        ],
+        "tags": {
+          "natural": "cliff"
+        }
+      },
+      {
+        "label": "river",
+        "weight": 4,
+        "keys": [
+          "river",
+          "река",
+          "речка"
+        ],
+        "tags": {
+          "waterway": "river"
+        }
+      },
+      {
+        "label": "lake",
+        "weight": 5,
+        "keys": [
+          "lake",
+          "озеро"
+        ],
+        "tags": {
+          "natural": "water",
+          "water": "lake"
+        }
+      },
+      {
+        "label": "pond",
+        "weight": 4,
+        "keys": [
+          "pond",
+          "пруд"
+        ],
+        "tags": {
+          "natural": "water",
+          "water": "pond"
+        }
+      },
+      {
+        "label": "beach",
+        "weight": 5,
+        "keys": [
+          "beach",
+          "пляж"
+        ],
+        "tags": {
+          "natural": "beach"
+        }
+      },
+      {
+        "label": "marsh",
+        "weight": 5,
+        "keys": [
+          "marsh",
+          "болото",
+          "топь"
+        ],
+        "tags": {
+          "natural": "wetland"
+        }
+      },
+      {
+        "label": "sand_dunes",
+        "weight": 7,
+        "keys": [
+          "dunes",
+          "sand dunes",
+          "дюны"
+        ],
+        "tags": {
+          "natural": "dune"
+        }
+      },
+      {
+        "label": "rock",
+        "weight": 6,
+        "keys": [
+          "rock",
+          "boulder",
+          "скала",
+          "валун"
+        ],
+        "tags": {
+          "natural": "rock"
+        }
+      },
+      {
+        "label": "forest",
+        "weight": 3,
+        "keys": [
+          "forest",
+          "лес"
+        ],
+        "tags": {
+          "landuse": "forest"
+        }
+      },
+      {
+        "label": "park",
+        "weight": 3,
+        "keys": [
+          "park",
+          "парк"
+        ],
+        "tags": {
+          "leisure": "park"
+        }
+      }
+    ]
+  },
+  {
+    "tier": 5,
+    "group": "Религия, история, культура",
+    "color": "#a259ff",
+    "entries": [
+      {
+        "label": "castle",
+        "weight": 8,
+        "keys": [
+          "castle",
+          "замок",
+          "крепость",
+          "кремль",
+          "цитадель"
+        ],
+        "tags": {
+          "historic": "castle"
+        }
+      },
+      {
+        "label": "ruins",
+        "weight": 7,
+        "keys": [
+          "ruins",
+          "руины",
+          "развалины"
+        ],
+        "tags": {
+          "historic": "ruins"
+        }
+      },
+      {
+        "label": "battlefield",
+        "weight": 8,
+        "keys": [
+          "battlefield",
+          "поле битвы",
+          "место боя"
+        ],
+        "tags": {
+          "historic": "battlefield"
+        }
+      },
+      {
+        "label": "archaeological_site",
+        "weight": 7,
+        "keys": [
+          "archaeological",
+          "раскопки",
+          "городище",
+          "курган"
+        ],
+        "tags": {
+          "historic": "archaeological_site"
+        }
+      },
+      {
+        "label": "monastery",
+        "weight": 7,
+        "keys": [
+          "monastery",
+          "монастырь"
+        ],
+        "tags": {
+          "historic": "monastery"
+        }
+      },
+      {
+        "label": "mosque",
+        "weight": 6,
+        "keys": [
+          "mosque",
+          "мечеть"
+        ],
+        "tags": {
+          "amenity": "place_of_worship",
+          "religion": "muslim"
+        }
+      },
+      {
+        "label": "synagogue",
+        "weight": 6,
+        "keys": [
+          "synagogue",
+          "синагога"
+        ],
+        "tags": {
+          "amenity": "place_of_worship",
+          "religion": "jewish"
+        }
+      },
+      {
+        "label": "church",
+        "weight": 5,
+        "keys": [
+          "church",
+          "chapel",
+          "cathedral",
+          "церковь",
+          "храм",
+          "собор"
+        ],
+        "tags": {
+          "amenity": "place_of_worship"
+        }
+      },
+      {
+        "label": "monument",
+        "weight": 6,
+        "keys": [
+          "monument",
+          "памятник",
+          "монумент"
+        ],
+        "tags": {
+          "historic": "monument"
+        }
+      },
+      {
+        "label": "memorial",
+        "weight": 5,
+        "keys": [
+          "memorial",
+          "мемориал"
+        ],
+        "tags": {
+          "historic": "memorial"
+        }
+      },
+      {
+        "label": "stadium",
+        "weight": 6,
+        "keys": [
+          "stadium",
+          "стадион",
+          "арена"
+        ],
+        "tags": {
+          "leisure": "stadium"
+        }
+      },
+      {
+        "label": "museum",
+        "weight": 5,
+        "keys": [
+          "museum",
+          "музей"
+        ],
+        "tags": {
+          "tourism": "museum"
+        }
+      }
+    ]
+  },
+  {
+    "tier": 6,
+    "group": "Городская инфраструктура",
+    "color": "#00d4ff",
+    "entries": [
+      {
+        "label": "hospital",
+        "weight": 5,
+        "keys": [
+          "hospital",
+          "больница",
+          "госпиталь"
+        ],
+        "tags": {
+          "amenity": "hospital"
+        }
+      },
+      {
+        "label": "university",
+        "weight": 5,
+        "keys": [
+          "university",
+          "университет",
+          "вуз"
+        ],
+        "tags": {
+          "amenity": "university"
+        }
+      },
+      {
+        "label": "school",
+        "weight": 4,
+        "keys": [
+          "school",
+          "школа"
+        ],
+        "tags": {
+          "amenity": "school"
+        }
+      },
+      {
+        "label": "mall",
+        "weight": 5,
+        "keys": [
+          "mall",
+          "торговый центр",
+          "тц"
+        ],
+        "tags": {
+          "shop": "mall"
+        }
+      },
+      {
+        "label": "supermarket",
+        "weight": 4,
+        "keys": [
+          "supermarket",
+          "супермаркет"
+        ],
+        "tags": {
+          "shop": "supermarket"
+        }
+      },
+      {
+        "label": "fuel_station",
+        "weight": 4,
+        "keys": [
+          "fuel",
+          "gas station",
+          "азс",
+          "заправка"
+        ],
+        "tags": {
+          "amenity": "fuel"
+        }
+      },
+      {
+        "label": "bus_stop",
+        "weight": 3,
+        "keys": [
+          "bus stop",
+          "автобусная остановка",
+          "остановка"
+        ],
+        "tags": {
+          "highway": "bus_stop"
+        },
+        "nodeOnly": true
+      },
+      {
+        "label": "bus_station",
+        "weight": 5,
+        "keys": [
+          "bus station",
+          "автовокзал"
+        ],
+        "tags": {
+          "amenity": "bus_station"
+        }
+      },
+      {
+        "label": "parking",
+        "weight": 3,
+        "keys": [
+          "parking",
+          "парковка",
+          "стоянка"
+        ],
+        "tags": {
+          "amenity": "parking"
+        }
+      },
+      {
+        "label": "cemetery",
+        "weight": 5,
+        "keys": [
+          "cemetery",
+          "кладбище"
+        ],
+        "tags": {
+          "landuse": "cemetery"
+        }
+      },
+      {
+        "label": "pharmacy",
+        "weight": 4,
+        "keys": [
+          "pharmacy",
+          "аптека"
+        ],
+        "tags": {
+          "amenity": "pharmacy"
+        }
+      },
+      {
+        "label": "vineyard",
+        "weight": 7,
+        "keys": [
+          "vineyard",
+          "виноградник"
+        ],
+        "tags": {
+          "landuse": "vineyard"
+        }
+      },
+      {
+        "label": "greenhouse",
+        "weight": 7,
+        "keys": [
+          "greenhouse",
+          "теплица"
+        ],
+        "tags": {
+          "building": "greenhouse"
+        }
+      },
+      {
+        "label": "zoo",
+        "weight": 6,
+        "keys": [
+          "zoo",
+          "зоопарк"
+        ],
+        "tags": {
+          "tourism": "zoo"
+        }
+      },
+      {
+        "label": "traffic_signals",
+        "weight": 2,
+        "keys": [
+          "traffic signals",
+          "светофор"
+        ],
+        "tags": {
+          "highway": "traffic_signals"
+        },
+        "nodeOnly": true
+      }
+    ]
+  }
+]
