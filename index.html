@@ -5,20 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>GEOINT — Геолокация по фото</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="geoint.css"/>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="header-logo">
     <div class="logo-mark"></div>
     <div class="logo-text">GEO<span>INT</span></div>
   </div>
-  <div class="header-coords" id="headerCoords">
-    <b>LAT</b>&nbsp;—&nbsp;&nbsp;<b>LON</b>&nbsp;—
-  </div>
+  <div class="header-coords" id="headerCoords"><b>LAT</b>&nbsp;—&nbsp;&nbsp;<b>LON</b>&nbsp;—</div>
   <div class="tile-switcher">
     <button class="tile-btn active" onclick="setTile('osm')">OSM</button>
     <button class="tile-btn" onclick="setTile('sat')">СПУТНИК</button>
@@ -28,41 +27,34 @@
     <div class="header-status" id="ovStatus" onclick="fetchOverpassStatus()" title="Обновить статус Overpass">
       <div class="status-dot" id="statusDot"></div>
       <span id="statusText">ПОДКЛЮЧЕНИЕ</span>
-      &nbsp;|&nbsp;
-      СЛОТЫ: <b id="statusSlots" style="color:var(--accent);margin-left:3px">—</b>
+      &nbsp;|&nbsp;СЛОТЫ: <b id="statusSlots" style="color:var(--accent);margin-left:3px">—</b>
     </div>
   </div>
 </header>
 
-<!-- LAYOUT -->
 <div class="layout">
 
-  <!-- SIDEBAR -->
+  <!-- ══ ЛЕВАЯ ПАНЕЛЬ — основная ══════════════════════════════════ -->
   <div class="sidebar">
 
-    <!-- PHOTO -->
+    <!-- ФИЛЬТР РЕГИОНА -->
     <div class="sb-section">
-      <div class="sb-label">Целевое фото</div>
-      <div class="photo-drop" id="photoDrop" onclick="handlePhotoClick()">
-        <div class="photo-drop-hint" id="photoHint">
-          <span class="ico">📸</span>
-          ЗАГРУЗИТЬ ФОТО<br>
-          <span style="font-size:9px">клик или перетащить</span>
-        </div>
+      <div class="sb-label">Фильтр по региону</div>
+      <div style="display:flex;gap:4px;margin-bottom:5px;">
+        <input class="clue-input" id="regionInput" type="text"
+          placeholder="Россия, Dubai, Osaka…" autocomplete="off"
+          style="flex:1;font-size:11px;"
+          oninput="onRegionInput()" onkeydown="if(event.key==='Enter')applyRegion()"/>
+        <button class="btn-add" onclick="applyRegion()">→</button>
       </div>
-      <input type="file" id="fileInput" accept="image/*"/>
-      <div class="exif-badge" id="exifBadge">
-        <span>📍</span>
-        <span id="exifCoords">—</span>
-        <button onclick="flyToExif()">→ MAP</button>
-      </div>
-      <div class="photo-actions" id="photoActions">
-        <button class="btn-ghost" onclick="openPhoto()">⛶ ОТКРЫТЬ</button>
-        <button class="btn-ghost danger" onclick="deletePhoto()">✕ УДАЛИТЬ</button>
+      <div id="regionStatus" style="display:none;font-family:'IBM Plex Mono',monospace;font-size:9px;
+        line-height:1.8;padding:5px 8px;border-radius:3px;margin-bottom:3px;"></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted2);">
+        Overpass ищет только внутри региона · Nominatim
       </div>
     </div>
 
-    <!-- SEARCH ZONE -->
+    <!-- ЗОНА ПОИСКА -->
     <div class="sb-section">
       <div class="sb-label">Зона поиска</div>
       <button class="pin-btn" id="btnPin">
@@ -77,47 +69,22 @@
       </div>
     </div>
 
-    <!-- BEARING -->
-    <div class="sb-section">
-      <div class="sb-label">Азимут / Направление съёмки</div>
-      <div class="bearing-row">
-        <button class="bearing-toggle" id="btnBearing" onclick="toggleBearing()">
-          🧭 ЗАДАТЬ НАПРАВЛЕНИЕ КАМЕРЫ
-        </button>
-      </div>
-      <div class="bearing-angle-wrap" id="bearingAngleWrap">
-        <label>АЗ</label>
-        <input type="range" id="bearingSlider" min="0" max="359" step="1" value="0"/>
-        <span class="bearing-deg" id="bearingDeg">0°</span>
-      </div>
-    </div>
-
-    <!-- SUN ANALYSIS -->
-    <div class="sb-section">
-      <div class="sb-label">Анализ солнца / теней</div>
-      <div style="display:flex;gap:6px;align-items:center;">
-        <input class="clue-input" id="sunDateInput" type="datetime-local"
-          style="flex:1;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border2);border-radius:3px;padding:5px 7px;outline:none;"/>
-        <button class="btn-add" style="padding:6px 10px;font-size:10px;" onclick="runSunCalc()">☀</button>
-      </div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted2);margin-top:4px;">
-        дата и время съёмки → направление солнца
-      </div>
-      <div class="sun-result" id="sunResult"></div>
-    </div>
-
-    <!-- CLUES -->
+    <!-- ЗАЦЕПКИ -->
     <div class="sb-section">
       <div class="sb-label">Объекты / Зацепки</div>
       <div class="input-row">
         <input class="clue-input" id="clueInput" type="text"
-          placeholder="церковь, мост, АЗС Shell..." autocomplete="off"/>
+          placeholder="церковь, мост, магазин…" autocomplete="off"/>
         <button class="btn-add" id="btnAdd">+ ДОБ</button>
+      </div>
+      <div style="display:flex;gap:4px;margin-top:4px;">
+        <input class="clue-input" id="brandInput" type="text"
+          placeholder="бренд / уточнение: Пятёрочка, Shell…"
+          autocomplete="off" style="flex:1;font-size:10px;color:var(--muted);"/>
       </div>
       <div class="hint-text" id="hintText"></div>
     </div>
 
-    <!-- CLUES LIST -->
     <div class="clues-scroll" id="cluesList">
       <div class="empty-msg" id="emptyMsg">
         ЗАЦЕПОК НЕТ<br>
@@ -125,7 +92,31 @@
       </div>
     </div>
 
-    <!-- BOTTOM -->
+    <!-- ОГРАНИЧЕНИЯ РАССТОЯНИЙ -->
+    <div class="sb-section" id="distSection" style="display:none;">
+      <div class="sb-label">Ограничения расстояний</div>
+      <div style="display:flex;gap:4px;align-items:center;margin-bottom:5px;flex-wrap:wrap;">
+        <select id="distClueA" style="flex:1;min-width:80px;background:var(--bg);color:var(--text);
+          border:1px solid var(--border2);border-radius:3px;padding:4px 5px;
+          font-family:'IBM Plex Mono',monospace;font-size:10px;outline:none;"></select>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap;">&lt;</span>
+        <input type="number" id="distMeters" min="10" max="50000" step="10" value="500"
+          style="width:62px;background:var(--bg);color:var(--text);border:1px solid var(--border2);
+                 border-radius:3px;padding:4px 5px;font-family:'IBM Plex Mono',monospace;
+                 font-size:11px;outline:none;text-align:center;"/>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)">м от</span>
+        <select id="distClueB" style="flex:1;min-width:80px;background:var(--bg);color:var(--text);
+          border:1px solid var(--border2);border-radius:3px;padding:4px 5px;
+          font-family:'IBM Plex Mono',monospace;font-size:10px;outline:none;"></select>
+        <button class="btn-add" onclick="addDistConstraint()" style="padding:5px 10px;">+</button>
+      </div>
+      <div id="distList"></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted2);margin-top:3px;">
+        Фильтрует кандидатов после анализа
+      </div>
+    </div>
+
+    <!-- АНАЛИЗ -->
     <div class="sb-bottom">
       <div class="buffer-row">
         <label>БУФЕР</label>
@@ -136,22 +127,21 @@
         <button class="btn-analyze" id="btnAnalyze" disabled>⌖ АНАЛИЗ ПЕРЕСЕЧЕНИЙ</button>
         <div class="candidates-list" id="candidateList"></div>
         <button class="export-btn" id="btnExport" style="display:none" onclick="exportCSV()">↓ ЭКСПОРТ CSV</button>
-        <button class="export-btn" id="btnCellTowers" onclick="searchCellTowers()" style="margin-top:5px;border-color:var(--accent3);color:var(--accent3)">📡 ВЫШКИ БС (OSM)</button>
       </div>
     </div>
 
-    <!-- SESSION -->
+    <!-- СЕССИЯ -->
     <div class="session-row">
-      <button class="session-btn" onclick="saveSession()" title="Сохранить сессию в файл">💾 СОХРАНИТЬ</button>
-      <button class="session-btn" onclick="loadSessionFile()" title="Загрузить сессию из файла">📂 ОТКРЫТЬ</button>
-      <button class="session-btn" onclick="copyPermalink()" title="Скопировать permalink">🔗 ССЫЛКА</button>
+      <button class="session-btn" onclick="saveSession()" title="Сохранить сессию">💾 СОХРАНИТЬ</button>
+      <button class="session-btn" onclick="loadSessionFile()" title="Загрузить сессию">📂 ОТКРЫТЬ</button>
+      <button class="session-btn" onclick="copyPermalink()" title="Скопировать ссылку">🔗 ССЫЛКА</button>
       <button class="session-btn warn" onclick="clearAll()" title="Сбросить всё">✕ СБРОС</button>
     </div>
     <input type="file" id="sessionFileInput" accept=".json" style="display:none"/>
 
-  </div>
+  </div><!-- /sidebar -->
 
-  <!-- MAP -->
+  <!-- ══ КАРТА ════════════════════════════════════════════════════ -->
   <div class="map-wrap">
     <div id="map"></div>
 
@@ -159,6 +149,7 @@
       <div class="hud-pill">ЗАЦЕПОК: <b id="hudClues">0</b></div>
       <div class="hud-pill" id="hudLayersWrap" style="display:none">СЛОЁВ: <b id="hudLayers">0</b></div>
       <div class="hud-pill warn" id="hudBearing" style="display:none">АЗ: <b id="hudBearingVal">0°</b></div>
+      <div class="hud-pill" id="hudRuler" style="display:none">📏 <b id="hudRulerVal">—</b></div>
     </div>
 
     <div class="legend-box" id="legendBox">
@@ -166,25 +157,135 @@
       <div id="legendItems"></div>
     </div>
 
-    <button class="heatmap-btn" id="heatmapBtn" onclick="toggleHeatmap()">🔥 ТЕПЛОВАЯ КАРТА</button>
+    <!-- Кнопка открытия правой панели — на правом краю карты -->
+    <button class="right-panel-toggle" id="rightPanelToggle" onclick="toggleRightPanel()"
+      title="Инструменты">⟩</button>
 
     <div class="ext-links">
       <button class="ext-btn" onclick="openF4Map()" title="3D-вид зданий">🏙 3D</button>
       <button class="ext-btn" onclick="openSatlex()" title="Анализ спутниковых тарелок">📡 SATLEX</button>
-      <button class="ext-btn" onclick="openGoogleEarth()" title="Google Earth Web">🌍 EARTH</button>
+      <button class="ext-btn" onclick="openYandexPanorama()" title="Яндекс Панорамы улиц">🚶 ПАНОРАМА</button>
     </div>
   </div>
 
-</div>
+  <!-- ══ ПРАВАЯ ПАНЕЛЬ — инструменты ══════════════════════════════ -->
+  <div class="sidebar-right" id="sidebarRight">
 
+    <div class="sidebar-right-header">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;
+        color:var(--muted);letter-spacing:.5px;">// ИНСТРУМЕНТЫ</span>
+      <button onclick="toggleRightPanel()"
+        style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;
+               padding:0;line-height:1;">⟨</button>
+    </div>
+
+    <!-- ФОТО -->
+    <div class="sb-section">
+      <div class="sb-label collapsible" onclick="toggleSection(this)">
+        <span>Целевое фото</span>
+        <span class="sb-label-hint">EXIF</span>
+        <span class="collapse-arrow">▾</span>
+      </div>
+      <div class="sb-section-body">
+        <div class="photo-drop" id="photoDrop" onclick="handlePhotoClick()">
+          <div class="photo-drop-hint" id="photoHint">
+            <span class="ico">📸</span>
+            ЗАГРУЗИТЬ ФОТО<br>
+            <span style="font-size:9px">клик или перетащить</span>
+          </div>
+        </div>
+        <input type="file" id="fileInput" accept="image/*"/>
+        <div class="exif-badge" id="exifBadge">
+          <span>📍</span><span id="exifCoords">—</span>
+          <button onclick="flyToExif()">→ MAP</button>
+        </div>
+        <div class="photo-actions" id="photoActions">
+          <button class="btn-ghost danger" onclick="deletePhoto()">✕ УДАЛИТЬ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ОРИЕНТАЦИЯ -->
+    <div class="sb-section">
+      <div class="sb-label collapsible" onclick="toggleSection(this)">
+        <span>Ориентация</span>
+        <span class="sb-label-hint">азимут · солнце</span>
+        <span class="collapse-arrow">▾</span>
+      </div>
+      <div class="sb-section-body">
+        <div class="bearing-row">
+          <button class="bearing-toggle" id="btnBearing" onclick="toggleBearing()">
+            🧭 ЗАДАТЬ НАПРАВЛЕНИЕ КАМЕРЫ
+          </button>
+        </div>
+        <div class="bearing-angle-wrap" id="bearingAngleWrap">
+          <label>АЗ</label>
+          <input type="range" id="bearingSlider" min="0" max="359" step="1" value="0"/>
+          <input type="number" id="bearingInput" min="0" max="359" step="1" value="0"
+            title="Введи точный азимут 0–359°"
+            style="width:54px;background:var(--bg);color:var(--accent);border:1px solid var(--accent);
+                   border-radius:3px;padding:4px 5px;font-family:'IBM Plex Mono',monospace;
+                   font-size:13px;font-weight:600;outline:none;text-align:center;"/>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted2)"
+            id="bearingCardinal"></span>
+        </div>
+
+        <div style="border-top:1px solid var(--border2);margin:8px 0 7px;"></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted2);
+          margin-bottom:5px;">☀ АНАЛИЗ СОЛНЦА / ТЕНЕЙ</div>
+        <div style="display:flex;gap:4px;align-items:center;margin-bottom:4px;">
+          <input type="date" id="sunDatePart"
+            style="flex:1;background:var(--bg);color:var(--text);border:1px solid var(--border2);
+                   border-radius:3px;padding:5px 6px;font-family:'IBM Plex Mono',monospace;
+                   font-size:11px;outline:none;"/>
+          <input type="time" id="sunTimePart"
+            style="width:72px;background:var(--bg);color:var(--text);border:1px solid var(--border2);
+                   border-radius:3px;padding:5px 6px;font-family:'IBM Plex Mono',monospace;
+                   font-size:11px;outline:none;"/>
+          <button class="btn-add" style="padding:6px 10px;font-size:10px;" onclick="runSunCalc()">☀</button>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted2);"
+          id="sunDateHint">из EXIF или введи вручную</div>
+        <div class="sun-result" id="sunResult"></div>
+      </div>
+    </div>
+
+    <!-- ЛИНЕЙКА -->
+    <div class="sb-section">
+      <div class="sb-label collapsible" onclick="toggleSection(this)">
+        <span>Линейка</span>
+        <span class="sb-label-hint">измерение расстояний</span>
+        <span class="collapse-arrow">▾</span>
+      </div>
+      <div class="sb-section-body">
+        <button class="btn-analyze" id="btnRuler" onclick="toggleRuler()"
+          style="font-size:10px;padding:7px 0;margin-bottom:6px;">
+          📏 ВКЛЮЧИТЬ ЛИНЕЙКУ
+        </button>
+        <div id="rulerHint" style="font-family:'IBM Plex Mono',monospace;font-size:9px;
+          color:var(--muted2);line-height:1.7;margin-bottom:5px;">
+          Кликай на карту чтобы добавить точки · двойной клик — завершить
+        </div>
+        <div id="rulerResult" style="display:none;font-family:'IBM Plex Mono',monospace;
+          font-size:11px;color:var(--accent);padding:6px 8px;
+          background:rgba(0,153,204,.06);border:1px solid rgba(0,153,204,.2);border-radius:3px;">
+        </div>
+        <button id="btnRulerClear" onclick="clearRuler()" style="display:none;margin-top:5px;
+          width:100%;background:none;border:1px solid var(--border2);border-radius:2px;
+          color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:9px;
+          padding:4px 0;cursor:pointer;">✕ ОЧИСТИТЬ</button>
+      </div>
+    </div>
+
+  </div><!-- /sidebar-right -->
+
+</div><!-- /layout -->
 <div class="toast" id="toast"></div>
 
-<!-- SCRIPTS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
-
-  <script src="geoint.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
+<script src="geoint.js"></script>
 </body>
 </html>

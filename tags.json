@@ -324,6 +324,51 @@
         "tags": {
           "man_made": "chimney"
         }
+      },
+      {
+        "label": "pagoda",
+        "weight": 9,
+        "keys": [
+          "пагода",
+          "pagoda",
+          "буддийский храм"
+        ],
+        "tags": {
+          "man_made": "tower",
+          "tower:type": "pagoda"
+        },
+        "tagsAlt": [
+          {
+            "historic": "yes",
+            "religion": "buddhist"
+          },
+          {
+            "amenity": "place_of_worship",
+            "religion": "buddhist"
+          }
+        ]
+      },
+      {
+        "label": "bell_tower",
+        "weight": 8,
+        "keys": [
+          "колокольня",
+          "bell tower",
+          "campanile"
+        ],
+        "tags": {
+          "man_made": "tower",
+          "tower:type": "bell_tower"
+        },
+        "tagsAlt": [
+          {
+            "historic": "bell_tower"
+          },
+          {
+            "man_made": "tower",
+            "tower:type": "campanile"
+          }
+        ]
       }
     ]
   },
@@ -585,6 +630,72 @@
         ],
         "tags": {
           "waterway": "weir"
+        }
+      },
+      {
+        "label": "tram_stop",
+        "weight": 7,
+        "keys": [
+          "трамвайная остановка",
+          "tram stop",
+          "трамвай"
+        ],
+        "tags": {
+          "railway": "tram_stop"
+        },
+        "nodeOnly": true
+      },
+      {
+        "label": "trolleybus_stop",
+        "weight": 7,
+        "keys": [
+          "троллейбусная остановка",
+          "trolleybus",
+          "троллейбус"
+        ],
+        "tags": {
+          "highway": "bus_stop",
+          "trolleybus": "yes"
+        },
+        "tagsAlt": [
+          {
+            "amenity": "bus_station",
+            "trolleybus": "yes"
+          }
+        ],
+        "nodeOnly": true
+      },
+      {
+        "label": "water_well",
+        "weight": 6,
+        "keys": [
+          "колодец",
+          "water well",
+          "колонка"
+        ],
+        "tags": {
+          "man_made": "water_well"
+        },
+        "tagsAlt": [
+          {
+            "amenity": "water_point"
+          },
+          {
+            "man_made": "water_tap"
+          }
+        ],
+        "nodeOnly": true
+      },
+      {
+        "label": "pumping_station",
+        "weight": 7,
+        "keys": [
+          "насосная станция",
+          "pumping station",
+          "водокачка"
+        ],
+        "tags": {
+          "man_made": "pumping_station"
         }
       }
     ]
@@ -868,6 +979,31 @@
         "tags": {
           "leisure": "park"
         }
+      },
+      {
+        "label": "spring",
+        "weight": 6,
+        "keys": [
+          "родник",
+          "spring",
+          "источник"
+        ],
+        "tags": {
+          "natural": "spring"
+        },
+        "nodeOnly": true
+      },
+      {
+        "label": "swamp",
+        "weight": 5,
+        "keys": [
+          "болото",
+          "swamp",
+          "wetland"
+        ],
+        "tags": {
+          "natural": "wetland"
+        }
       }
     ]
   },
@@ -1022,6 +1158,58 @@
         "tags": {
           "tourism": "museum"
         }
+      },
+      {
+        "label": "fountain",
+        "weight": 6,
+        "keys": [
+          "фонтан",
+          "fountain"
+        ],
+        "tags": {
+          "amenity": "fountain"
+        },
+        "nodeOnly": true
+      },
+      {
+        "label": "wayside_cross",
+        "weight": 7,
+        "keys": [
+          "придорожный крест",
+          "wayside cross",
+          "поклонный крест",
+          "распятие"
+        ],
+        "tags": {
+          "historic": "wayside_cross"
+        },
+        "tagsAlt": [
+          {
+            "historic": "cross"
+          }
+        ],
+        "nodeOnly": true
+      },
+      {
+        "label": "sculpture",
+        "weight": 6,
+        "keys": [
+          "скульптура",
+          "sculpture",
+          "статуя",
+          "statue"
+        ],
+        "tags": {
+          "tourism": "artwork",
+          "artwork_type": "sculpture"
+        },
+        "tagsAlt": [
+          {
+            "historic": "monument",
+            "monument": "statue"
+          }
+        ],
+        "nodeOnly": true
       }
     ]
   },
@@ -1201,6 +1389,246 @@
         ],
         "tags": {
           "highway": "traffic_signals"
+        },
+        "nodeOnly": true
+      },
+      {
+        "label": "billboard",
+        "weight": 4,
+        "keys": [
+          "билборд",
+          "billboard",
+          "рекламный щит",
+          "реклама"
+        ],
+        "tags": {
+          "advertising": "billboard"
+        },
+        "tagsAlt": [
+          {
+            "advertising": "column"
+          },
+          {
+            "advertising": "poster_box"
+          }
+        ],
+        "nodeOnly": true
+      },
+      {
+        "label": "pedestrian_crossing",
+        "weight": 5,
+        "keys": [
+          "пешеходный переход",
+          "crossing",
+          "зебра",
+          "переход"
+        ],
+        "tags": {
+          "highway": "crossing"
+        },
+        "nodeOnly": true
+      },
+      {
+        "label": "atm",
+        "weight": 4,
+        "keys": [
+          "банкомат",
+          "atm",
+          "банк"
+        ],
+        "tags": {
+          "amenity": "atm"
+        },
+        "tagsAlt": [
+          {
+            "amenity": "bank"
+          }
+        ],
+        "nodeOnly": true
+      },
+      {
+        "label": "post_office",
+        "weight": 5,
+        "keys": [
+          "почта",
+          "post office",
+          "почтовое отделение",
+          "почтовый ящик"
+        ],
+        "tags": {
+          "amenity": "post_office"
+        },
+        "tagsAlt": [
+          {
+            "amenity": "post_box"
+          }
+        ],
+        "nodeOnly": true
+      },
+      {
+        "label": "car_wash",
+        "weight": 5,
+        "keys": [
+          "автомойка",
+          "car wash",
+          "мойка"
+        ],
+        "tags": {
+          "amenity": "car_wash"
+        },
+        "nodeOnly": true
+      },
+      {
+        "label": "playground",
+        "weight": 4,
+        "keys": [
+          "детская площадка",
+          "playground",
+          "детская"
+        ],
+        "tags": {
+          "leisure": "playground"
+        }
+      },
+      {
+        "label": "sports_court",
+        "weight": 4,
+        "keys": [
+          "спортивная площадка",
+          "sports court",
+          "теннисный корт",
+          "баскетбольная площадка"
+        ],
+        "tags": {
+          "leisure": "pitch"
+        },
+        "tagsAlt": [
+          {
+            "leisure": "sports_centre"
+          },
+          {
+            "sport": "tennis"
+          },
+          {
+            "sport": "basketball"
+          }
+        ]
+      },
+      {
+        "label": "swimming_pool",
+        "weight": 5,
+        "keys": [
+          "бассейн",
+          "swimming pool",
+          "плавательный"
+        ],
+        "tags": {
+          "leisure": "swimming_pool"
+        },
+        "tagsAlt": [
+          {
+            "amenity": "swimming_pool"
+          }
+        ]
+      },
+      {
+        "label": "kindergarten",
+        "weight": 5,
+        "keys": [
+          "детский сад",
+          "kindergarten",
+          "садик"
+        ],
+        "tags": {
+          "amenity": "kindergarten"
+        }
+      },
+      {
+        "label": "fire_station",
+        "weight": 6,
+        "keys": [
+          "пожарная часть",
+          "fire station",
+          "пожарная"
+        ],
+        "tags": {
+          "amenity": "fire_station"
+        }
+      },
+      {
+        "label": "car_dealer",
+        "weight": 4,
+        "keys": [
+          "автосалон",
+          "car dealer",
+          "автодилер"
+        ],
+        "tags": {
+          "shop": "car"
+        },
+        "tagsAlt": [
+          {
+            "amenity": "car_rental"
+          }
+        ],
+        "nodeOnly": true
+      },
+      {
+        "label": "bicycle_parking",
+        "weight": 3,
+        "keys": [
+          "велопарковка",
+          "bicycle parking",
+          "велостоянка"
+        ],
+        "tags": {
+          "amenity": "bicycle_parking"
+        },
+        "nodeOnly": true
+      },
+      {
+        "label": "street_lamp",
+        "weight": 3,
+        "keys": [
+          "фонарный столб",
+          "street lamp",
+          "фонарь"
+        ],
+        "tags": {
+          "highway": "street_lamp"
+        },
+        "nodeOnly": true
+      },
+      {
+        "label": "speed_camera",
+        "weight": 5,
+        "keys": [
+          "дорожная камера",
+          "speed camera",
+          "камера",
+          "фоторадар"
+        ],
+        "tags": {
+          "highway": "speed_camera"
+        },
+        "tagsAlt": [
+          {
+            "man_made": "surveillance"
+          }
+        ],
+        "nodeOnly": true
+      },
+      {
+        "label": "bollard",
+        "weight": 3,
+        "keys": [
+          "боллард",
+          "bollard",
+          "столбик",
+          "ограждение"
+        ],
+        "tags": {
+          "barrier": "bollard"
         },
         "nodeOnly": true
       }
